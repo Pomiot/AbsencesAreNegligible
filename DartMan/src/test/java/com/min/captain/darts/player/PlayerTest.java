@@ -15,7 +15,8 @@ public class PlayerTest extends TestCase {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
  
-		Player user = new Player("first", "last");
+		Player user = new Player("firstTest", "lastTest");
+		
 		session.save(user);
  
 		session.getTransaction().commit();
