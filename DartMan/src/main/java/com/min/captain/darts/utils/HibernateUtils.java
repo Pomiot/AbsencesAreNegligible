@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.min.captain.darts.player.Player;
+import com.min.captain.darts.application.player.Player;
 
 public final class HibernateUtils 
 {

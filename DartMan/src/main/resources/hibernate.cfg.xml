@@ -22,7 +22,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
  
         <!-- Annotated entity classes -->
-        <mapping class="com.min.captain.darts.player.Player"/>
+        <mapping class="com.min.captain.darts.application.player.Player"/>
         
     </session-factory>
 </hibernate-configuration>

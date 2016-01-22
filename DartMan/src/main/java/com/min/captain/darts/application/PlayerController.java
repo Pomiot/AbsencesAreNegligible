@@ -1,14 +1,17 @@
-package com.min.captain.darts.player;
+package com.min.captain.darts.application;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.min.captain.darts.application.player.Player;
 import com.min.captain.darts.utils.HibernateUtils;
 
-@RequestMapping(value="/player")
+@EnableAutoConfiguration
 @RestController
+@RequestMapping(value="/player")
 public class PlayerController 
 {
 	@RequestMapping(value="/test")

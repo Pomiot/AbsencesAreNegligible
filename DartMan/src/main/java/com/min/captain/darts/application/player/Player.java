@@ -1,4 +1,4 @@
-package com.min.captain.darts.player;
+package com.min.captain.darts.application.player;
 
 import java.io.Serializable;
 
