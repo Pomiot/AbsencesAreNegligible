@@ -1,14 +1,12 @@
 package com.min.captain.darts.player;
 
-import junit.framework.TestCase;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.min.captain.darts.application.player.Player;
 
-public class PlayerTest extends TestCase {
+public class PlayerTest {
 	 
 	public void testApp() {
 		@SuppressWarnings("deprecation")
@@ -16,7 +14,6 @@ public class PlayerTest extends TestCase {
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
- 
 		Player user = new Player("firstTest", "lastTest");
 		
 		session.save(user);

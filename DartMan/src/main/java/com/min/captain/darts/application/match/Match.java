@@ -1,28 +1,44 @@
 package com.min.captain.darts.application.match;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.min.captain.darts.application.throwSet.ThrowSet;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import com.min.captain.darts.application.throwSet.ThrowSet;
+import com.min.captain.darts.application.tournament.Tournament;
+
+@Entity
+@Table(name="match")
 public class Match implements Serializable
 {
 	private static final long serialVersionUID = -4302364823675375178L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private List<ThrowSet> round1;
+	@Column(name="start_date")
+	private Date startDate;
 	
-	private List<ThrowSet> round2;
+	@OneToMany(mappedBy="match")
+	private List<ThrowSet> throwSets;
 	
-	private List<ThrowSet> round3;
+	@ManyToOne
+	@JoinColumn(name="tournament_id")
+	private Tournament tournament;
 	
-	public Match()
-	{
-		this.setRound1(new ArrayList<>());
-		this.setRound2(new ArrayList<>());
-		this.setRound3(new ArrayList<>());
+	public Match() {
+		setStartDate(new Date(System.currentTimeMillis()));
 	}
 
 	public Long getId() {
@@ -33,27 +49,28 @@ public class Match implements Serializable
 		this.id = id;
 	}
 
-	public List<ThrowSet> getRound1() {
-		return round1;
+	public List<ThrowSet> getThrowSets() {
+		return throwSets;
 	}
 
-	public void setRound1(List<ThrowSet> round1) {
-		this.round1 = round1;
+	public void setThrowSets(List<ThrowSet> throwSets) {
+		this.throwSets = throwSets;
 	}
 
-	public List<ThrowSet> getRound2() {
-		return round2;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setRound2(List<ThrowSet> round2) {
-		this.round2 = round2;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public List<ThrowSet> getRound3() {
-		return round3;
+	public Tournament getTournament() {
+		return tournament;
 	}
 
-	public void setRound3(List<ThrowSet> round3) {
-		this.round3 = round3;
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
+
 }
