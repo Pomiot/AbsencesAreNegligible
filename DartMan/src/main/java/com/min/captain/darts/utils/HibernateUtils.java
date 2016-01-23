@@ -1,5 +1,8 @@
 package com.min.captain.darts.utils;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -34,6 +37,19 @@ public final class HibernateUtils
 			}
 		}
 	}
+	
+	public static <T> List<T> searchAll(Session session, Class resource) {
+		session.beginTransaction();
+		
+		String queryString = "from " + resource.getTypeName();
+		
+		@SuppressWarnings("unchecked")
+		List<T> list = session.createQuery(queryString).list();
+		
+		session.getTransaction().commit();
+		
+		return list;
+	 }
 	
 	public static void commit(Session session) {
 		session.getTransaction().commit();

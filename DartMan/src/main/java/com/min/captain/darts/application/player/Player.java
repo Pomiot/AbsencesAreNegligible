@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.min.captain.darts.application.throwSet.ThrowSet;
 
@@ -28,6 +29,7 @@ public class Player implements Serializable
 	private String lastName;
 	
 	@OneToMany(mappedBy="player")
+	@Transient
 	private Set<ThrowSet> playerThrows;
 	
 	public Player() { }
@@ -60,7 +62,8 @@ public class Player implements Serializable
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@Transient
 	public Set<ThrowSet> getPlayerThrows() {
 		return playerThrows;
 	}

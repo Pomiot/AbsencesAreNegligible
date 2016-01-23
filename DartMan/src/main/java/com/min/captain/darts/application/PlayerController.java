@@ -1,5 +1,7 @@
 package com.min.captain.darts.application;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +49,21 @@ public class PlayerController
 	public void deletePlayer(@PathVariable String playerId){
 		System.out.println("deletePlayer method - id: " + playerId);
 	}
+	
+	@RequestMapping(value = "/getAll")
+	public List<Player> getAll() {
+		
+		try
+		{
+			session = HibernateUtils.createAndOpenSession();
+			List<Player> allPlayers = HibernateUtils.searchAll(session, Player.class);
 
+			return allPlayers;
+		}
+		finally
+		{
+			session.close();
+		}
+	}
 
 }
