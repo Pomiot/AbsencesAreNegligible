@@ -4,11 +4,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import pl.edu.amu.database.PlayerUtility;
 import pl.edu.amu.rest.dto.Player;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +25,16 @@ public class PlayerResource {
     @GET
     @ApiOperation(value = "Gets list of all players", response = Player.class)
     public List<Player> getPlayers(){
-        return players;
+    	
+        return PlayerUtility.getAllPlayers();
     }
 
     @POST
     @ApiOperation(value = "Creates new player", response = Player.class)
     public Player savePlayer(@Valid Player player){
-        players.add(player);
+        
+    	PlayerUtility.addPlayer(player);
+    	
         return player;
     }
 
@@ -39,11 +44,14 @@ public class PlayerResource {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
     public Player getPlayer(@PathParam("login") final String login){
-        return players
-                .stream()
-                .filter(user -> login.equals(user.getLogin()))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
+    	
+    	return PlayerUtility.getPlayerByLogin(login);
+    	
+    	//        return players
+//                .stream()
+//                .filter(user -> login.equals(user.getLogin()))
+//                .findFirst()
+//                .orElseThrow(NotFoundException::new);
    }
 
     @DELETE
@@ -52,7 +60,9 @@ public class PlayerResource {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
     public void deletePlayer(@PathParam("login") final String login) {
-
+    	
+    	PlayerUtility.deletePlayer(login);
+    	
     }
 
     @PUT
