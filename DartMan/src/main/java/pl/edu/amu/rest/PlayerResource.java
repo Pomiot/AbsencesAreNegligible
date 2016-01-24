@@ -10,10 +10,6 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by adrian.perek on 2015-20-10.
- */
-//@Singleton
 @Path("/players")
 @Api("players")
 @Consumes(MediaType.APPLICATION_JSON)

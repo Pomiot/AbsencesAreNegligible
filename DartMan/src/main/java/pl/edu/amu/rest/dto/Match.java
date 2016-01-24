@@ -3,9 +3,6 @@ package pl.edu.amu.rest.dto;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Tomasz on 23.01.2016.
- */
 public class Match {
 
     private Long id;

@@ -1,8 +1,5 @@
 package pl.edu.amu.rest.dto;
 
-/**
- * Created by Tomasz on 23.01.2016.
- */
 public class ThrowSet {
 
     private Long id;
