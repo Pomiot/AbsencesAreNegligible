@@ -61,12 +61,11 @@ public class PlayerResource {
     }
 
     @PUT
-    @Path("/{login}")
     @ApiOperation(value = "modifies player with given login")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
-    public Player modifyPlayer(@PathParam("login") final String login, @Valid Player player) {
-        return playerRepository.updatePlayerByLogin(login, player);
+    public Player modifyPlayer(@Valid Player player) {
+        return playerRepository.updatePlayerByLogin(player);
     }
 
 }

@@ -39,9 +39,9 @@ public class DummyPlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public Player updatePlayerByLogin(String login, Player player) {
+    public Player updatePlayerByLogin(Player player) {
 
-        deletePlayer(login);
+        deletePlayer(player.getLogin());
         boolean result = addPlayer(player);
         if(result) return player;
         else return null;

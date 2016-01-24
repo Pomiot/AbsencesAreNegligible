@@ -69,20 +69,22 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
 		try
 		{
-			int deleted = entityManager.createQuery(
-								"DELETE FROM Player p WHERE p.login LIKE :login")
-								.setParameter("login", login).executeUpdate();
-
-			return deleted >= 1;
+			entityManager.getTransaction().begin();
+			entityManager.remove(getPlayerByLogin(login));
+			entityManager.getTransaction().commit();
+			
+			return true;
 		}
 		catch (Exception e)
-		{
+		{	
+			entityManager.getTransaction().rollback();
+			
 			throw new NotFoundException();
 		}
 	}
 
 	@Override
-	public Player updatePlayerByLogin(String login, Player player) {
+	public Player updatePlayerByLogin(Player player) {
 		return null;
 	}
 }
