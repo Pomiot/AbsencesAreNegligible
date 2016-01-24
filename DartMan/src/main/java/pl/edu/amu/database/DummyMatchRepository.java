@@ -15,10 +15,10 @@ import java.util.TreeSet;
  */
 public class DummyMatchRepository implements MatchRepository {
 
-    List<Match> matches = new ArrayList<>();
+    static List<Match> matches = new ArrayList<>();
 
-    ThrowsRepository throwsRepository;
-    PlayerRepository playerRepository;
+    ThrowsRepository throwsRepository = new DummyThrowsRepository();
+    PlayerRepository playerRepository = new DummyPlayerRepository();
 
     @Override
     public List<Match> getAllMatches() {
@@ -70,12 +70,14 @@ public class DummyMatchRepository implements MatchRepository {
 
     @Override
     public List<ThrowSet> getThrowsInRound(String matchId, Integer roundNumber) {
-        return null;
+        return throwsRepository.getThrowsFromRoundInMatch(matchId, roundNumber);
     }
 
     @Override
     public ThrowSet addThrowSetToRound(String matchId, Integer roundNumber, ThrowSet throwSet) {
-
+        throwSet.setRound(roundNumber);
+        throwSet.setMatchId(Long.parseLong(matchId));
+        throwsRepository.addThrowSet(throwSet);
         return throwSet;
     }
 }

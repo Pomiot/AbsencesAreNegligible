@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class DummyPlayerRepository implements PlayerRepository {
 
-    List<Player> players = new ArrayList<>();
+    static List<Player> players = new ArrayList<>();
 
     @Override
     public List<Player> getAllPlayers() {

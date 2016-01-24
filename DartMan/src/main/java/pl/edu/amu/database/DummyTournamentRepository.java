@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class DummyTournamentRepository implements TournamentRepository {
 
-    List<Tournament> tournaments = new ArrayList<>();
+    static List<Tournament> tournaments = new ArrayList<>();
 
     @Override
     public List<Tournament> getTournaments() {
