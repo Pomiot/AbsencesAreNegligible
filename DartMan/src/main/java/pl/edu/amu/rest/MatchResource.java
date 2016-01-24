@@ -1,6 +1,7 @@
 package pl.edu.amu.rest;
 
 import io.swagger.annotations.Api;
+import pl.edu.amu.database.DummyMatchRepository;
 import pl.edu.amu.database.MatchRepository;
 import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Player;
@@ -12,12 +13,12 @@ import java.util.List;
 
 
 @Path("/matches")
+@Api("matches")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MatchResource {
 
-    MatchRepository matchRepository = null;
-
+    private static MatchRepository matchRepository = new DummyMatchRepository();
 
     @GET
     public List<Match> getMatches() {
@@ -26,7 +27,9 @@ public class MatchResource {
 
     @POST
     public Match saveMatch(Match match) {
-        return matchRepository.addMatch(match);
+        matchRepository.addMatch(match);
+
+        return match;
     }
 
     @GET

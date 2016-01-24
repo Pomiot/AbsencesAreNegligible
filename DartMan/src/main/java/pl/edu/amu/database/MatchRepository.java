@@ -13,7 +13,7 @@ public interface MatchRepository {
 
     Match getMatchById(String matchId) throws NotFoundException;
 
-    Match addMatch(Match match);
+    boolean addMatch(Match match);
 
     boolean deleteMatch(String matchId);
 

@@ -1,6 +1,8 @@
 package pl.edu.amu.rest;
 
 import io.swagger.annotations.Api;
+import pl.edu.amu.database.DummyTournamentRepository;
+import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.rest.dto.Tournament;
 
 import javax.ws.rs.*;
@@ -13,31 +15,33 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class TournamentResource {
 
+    private static TournamentRepository tournamentRepository = new DummyTournamentRepository();
+
     @GET
     public List<Tournament> getTournaments(){
-        return null;
+        return tournamentRepository.getTournaments();
     }
 
     @POST
     public Tournament saveTournament(Tournament tournament){
-        return null;
+        return tournamentRepository.saveTournament(tournament);
     }
 
     @GET
     @Path("/{tournamentId}")
     public Tournament getTournament(@PathParam("tournamentId") final String tournamentId){
-        return null;
+        return tournamentRepository.getTournamentById(tournamentId);
     }
 
     @DELETE
     @Path("/{tournamentId}")
     public void deleteTournament(@PathParam("tournamentId") final String tournamentId){
-
+        tournamentRepository.deleteTournament(tournamentId);
     }
 
     @PUT
     @Path("/{tournamentId}")
-    public void modifyTournament(@PathParam("tournamentId") final String tournamentId){
-
+    public Tournament modifyTournament(@PathParam("tournamentId") final String tournamentId, Tournament tournament){
+        return tournamentRepository.modifyTournament(tournamentId, tournament);
     }
 }
