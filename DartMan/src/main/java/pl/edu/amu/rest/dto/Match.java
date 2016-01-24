@@ -1,5 +1,8 @@
 package pl.edu.amu.rest.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,18 +15,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="match")
+@ApiModel(value = "Match", description = "Object describing match id and metadata.")
 public class Match implements Serializable {
 
     private static final long serialVersionUID = -6377435247877594960L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Auto-generated", required = true)
     private Long id;
 
     @Column(name="start_date")
+    @ApiModelProperty(value = "Match creation date. Auto-generated", required = true)
     private Date startDate;
 
     @Column(name="tournament_name")
+    @ApiModelProperty(value = "Tournament that match belongs to", required = false)
     private String tournamentName;
 
     public Match() {
