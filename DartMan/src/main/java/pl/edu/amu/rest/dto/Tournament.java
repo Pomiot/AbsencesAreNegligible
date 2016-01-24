@@ -1,16 +1,34 @@
 package pl.edu.amu.rest.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class Tournament {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="tournament")
+public class Tournament implements Serializable {
+
+	private static final long serialVersionUID = 2357446534853404697L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@Column(name="start_date")
     private Date startDate;
 
+	@Column(name="tournament_name")
     private String tournamentName;
 
+	@OneToMany(mappedBy="tournament")
     private Set<Match> matches;
 
     public Tournament() {
