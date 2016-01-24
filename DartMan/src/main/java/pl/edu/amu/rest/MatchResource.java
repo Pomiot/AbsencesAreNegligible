@@ -2,6 +2,7 @@ package pl.edu.amu.rest;
 
 import io.swagger.annotations.Api;
 import pl.edu.amu.rest.dto.Match;
+import pl.edu.amu.rest.dto.Player;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -43,5 +44,11 @@ public class MatchResource {
     @Path("/{matchId}")
     public void modifyMatch(@PathParam("matchId") String matchId) {
 
+    }
+
+    @GET
+    @Path("/{matchId}/players/")
+    public List<Player> getPlayersInMatch(@PathParam("matchId") String matchId) {
+        return null;
     }
 }

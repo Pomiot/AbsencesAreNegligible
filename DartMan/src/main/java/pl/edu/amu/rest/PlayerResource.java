@@ -2,6 +2,8 @@ package pl.edu.amu.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pl.edu.amu.rest.dto.Player;
 
 import javax.validation.Valid;
@@ -19,11 +21,13 @@ public class PlayerResource {
     private static final List<Player> players = new ArrayList<>();
 
     @GET
+    @ApiOperation(value = "Gets list of all players", response = Player.class)
     public List<Player> getPlayers(){
         return players;
     }
 
     @POST
+    @ApiOperation(value = "Creates new player", response = Player.class)
     public Player savePlayer(@Valid Player player){
         players.add(player);
         return player;
@@ -31,8 +35,9 @@ public class PlayerResource {
 
     @GET
     @Path("/{login}")
-    @ApiOperation(value = "Gets player by login",
-            response = Player.class)
+    @ApiOperation(value = "Gets player by login", response = Player.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Player not found") })
     public Player getPlayer(@PathParam("login") final String login){
         return players
                 .stream()
@@ -43,14 +48,20 @@ public class PlayerResource {
 
     @DELETE
     @Path("/{login}")
+    @ApiOperation(value = "Removes player with given login")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Player not found") })
     public void deletePlayer(@PathParam("login") final String login) {
 
     }
 
     @PUT
-    @Path("/{playerId}")
-    public void modifyPlayer(@PathParam("login") final String login) {
-
+    @Path("/{login}")
+    @ApiOperation(value = "modifies player with given login")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Player not found") })
+    public Player modifyPlayer(@PathParam("login") final String login, @Valid Player player) {
+        return null;
     }
 
 }
