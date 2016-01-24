@@ -1,13 +1,15 @@
-package pl.edu.amu.database;
+package pl.edu.amu.repositoryImplementations;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.ws.rs.NotFoundException;
 
+import pl.edu.amu.database.DatabaseManager;
+import pl.edu.amu.database.PlayerRepository;
 import pl.edu.amu.rest.dto.Player;
 
-public class PlayerUtility implements PlayerRepository {
+public class PlayerRepositoryImpl implements PlayerRepository {
 
 	@Override
 	public List<Player> getAllPlayers() {
@@ -16,7 +18,6 @@ public class PlayerUtility implements PlayerRepository {
 
 		return entityManager.createQuery(
 			    "SELECT p FROM Player p")
-			    .setMaxResults(10)
 			    .getResultList();
 	}
 
@@ -64,8 +65,6 @@ public class PlayerUtility implements PlayerRepository {
 	@Override
 	public boolean deletePlayer(String login) {
 
-		boolean result = false;
-
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 
 		try
@@ -74,24 +73,16 @@ public class PlayerUtility implements PlayerRepository {
 								"DELETE FROM Player p WHERE p.login LIKE :login")
 								.setParameter("login", login).executeUpdate();
 
-			result = deleted >= 1 ? true : false;
+			return deleted >= 1;
 		}
 		catch (Exception e)
 		{
 			throw new NotFoundException();
 		}
-
-		return result;
 	}
 
 	@Override
 	public Player updatePlayerByLogin(String login, Player player) {
 		return null;
 	}
-
-	@Override
-	public Player getPlayerById(Long id) {
-		return null;
-	}
-
 }

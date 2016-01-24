@@ -18,6 +18,4 @@ public interface PlayerRepository {
     boolean deletePlayer(String login);
 
     Player updatePlayerByLogin(String login, Player player);
-
-    Player getPlayerById(Long id);
 }

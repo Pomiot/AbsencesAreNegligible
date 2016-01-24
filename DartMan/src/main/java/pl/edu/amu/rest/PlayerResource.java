@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import pl.edu.amu.database.DummyPlayerRepository;
 import pl.edu.amu.database.PlayerRepository;
-import pl.edu.amu.database.PlayerUtility;
+import pl.edu.amu.repositoryImplementations.PlayerRepositoryImpl;
 import pl.edu.amu.rest.dto.Player;
 
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerResource {
 
-    private static PlayerRepository playerRepository = new DummyPlayerRepository();
+    private static PlayerRepository playerRepository = new PlayerRepositoryImpl();
 
     @GET
     @ApiOperation(value = "Gets list of all players", response = Player.class)
