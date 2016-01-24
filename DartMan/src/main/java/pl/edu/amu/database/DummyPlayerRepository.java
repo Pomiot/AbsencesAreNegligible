@@ -46,4 +46,13 @@ public class DummyPlayerRepository implements PlayerRepository {
         if(result) return player;
         else return null;
     }
+
+    @Override
+    public Player getPlayerById(Long id) {
+        return players
+                .stream()
+                .filter(user -> id.equals(user.getId()))
+                .findFirst()
+                .orElseThrow(NotFoundException::new);
+    }
 }

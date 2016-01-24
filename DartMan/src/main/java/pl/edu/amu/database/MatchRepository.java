@@ -21,7 +21,7 @@ public interface MatchRepository {
 
     List<Player> getPlayersInMatch(String matchId);
 
-    List<ThrowSet> getAllThrows(String matchId);
+    List<ThrowSet> getAllThrowsInMatch(String matchId);
 
     List<ThrowSet> getThrowsInRound(String matchId, Integer roundNumber);
 

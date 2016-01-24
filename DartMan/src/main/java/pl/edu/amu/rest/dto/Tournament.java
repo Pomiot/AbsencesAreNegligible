@@ -16,20 +16,17 @@ import javax.persistence.Table;
 @Table(name="tournament")
 public class Tournament implements Serializable {
 
-	private static final long serialVersionUID = 2357446534853404697L;
+    private static final long serialVersionUID = 2357446534853404697L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@Column(name="start_date")
+    @Column(name="start_date")
     private Date startDate;
 
-	@Column(name="tournament_name")
+    @Column(name="tournament_name")
     private String tournamentName;
-
-	@OneToMany(mappedBy="tournament")
-    private Set<Match> matches;
 
     public Tournament() {
         this.startDate = new Date(System.currentTimeMillis());
@@ -62,13 +59,5 @@ public class Tournament implements Serializable {
 
     public void setTournamentName(String tournamentName) {
         this.tournamentName = tournamentName;
-    }
-
-    public Set<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(Set<Match> matches) {
-        this.matches = matches;
     }
 }

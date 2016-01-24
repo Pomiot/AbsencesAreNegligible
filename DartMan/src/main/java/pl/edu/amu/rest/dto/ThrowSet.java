@@ -7,69 +7,57 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="throwset")
 public class ThrowSet implements Serializable {
 
-	private static final long serialVersionUID = 4542432973465644245L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private static final long serialVersionUID = 4542432973465644245L;
 
-	@ManyToOne
-    @JoinColumn(name="player_id")
-    private Player player;
-    
-	@ManyToOne
-    @JoinColumn(name="match_id")
-    private Match match;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name="round")
+    @Column(name="player_id")
+    private Long playerId;
+
+    @Column(name="match_id")
+    private Long matchId;
+
+    @Column(name="round")
     private Integer round;
 
-	@Column(name="first_throw")
+    @Column(name="first_throw")
     private Integer firstThrow;
 
-	@Column(name="second_throw")
+    @Column(name="second_throw")
     private Integer secondThrow;
 
-	@Column(name="third_throw")
+    @Column(name="third_throw")
     private Integer thirdThrow;
 
-	public ThrowSet()
+    public ThrowSet()
     {
-    	;
+        ;
     }
-    
-    public ThrowSet(Player player, Match match, Integer round, Integer first, Integer second, Integer third)
+
+    public ThrowSet(Long playerId, Long matchId, Integer round, Integer first, Integer second, Integer third)
     {
-    	this.player = player;
-    	this.match = match;
-    	this.round = round;
-    	this.firstThrow = first;
-    	this.secondThrow = second;
-    	this.thirdThrow = third;
+        this.playerId = playerId;
+        this.matchId = matchId;
+        this.round = round;
+        this.firstThrow = first;
+        this.secondThrow = second;
+        this.thirdThrow = third;
     }
-	
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public Integer getRound() {
@@ -104,13 +92,20 @@ public class ThrowSet implements Serializable {
         this.thirdThrow = thirdThrow;
     }
 
-    public Match getMatch() {
-		return match;
-	}
+    public Long getPlayerId() {
+        return playerId;
+    }
 
-	public void setMatch(Match match) {
-		this.match = match;
-	}
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
+    }
 
 
+    public Long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
+    }
 }

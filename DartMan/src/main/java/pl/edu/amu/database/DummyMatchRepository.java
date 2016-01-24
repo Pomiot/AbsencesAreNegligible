@@ -7,6 +7,8 @@ import pl.edu.amu.rest.dto.ThrowSet;
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by Pomiot on 24.01.2016.
@@ -14,6 +16,9 @@ import java.util.List;
 public class DummyMatchRepository implements MatchRepository {
 
     List<Match> matches = new ArrayList<>();
+
+    ThrowsRepository throwsRepository;
+    PlayerRepository playerRepository;
 
     @Override
     public List<Match> getAllMatches() {
@@ -49,21 +54,18 @@ public class DummyMatchRepository implements MatchRepository {
     @Override
     public List<Player> getPlayersInMatch(String matchId) {
 
-        List<Player> players = new ArrayList<>();
-
-        Match match = getMatchById(matchId);
-        for(ThrowSet throwSet : match.getThrowSets()){
-            players.add(throwSet.getPlayer());
+        List<ThrowSet> throwSets = throwsRepository.getThrowsByMatchId(matchId);
+        Set<Player> players = new TreeSet<>();
+        for (ThrowSet throwSet : throwSets){
+            players.add(playerRepository.getPlayerById(throwSet.getPlayerId()));
         }
 
-        return players;
+        return new ArrayList<>(players);
     }
 
     @Override
-    public List<ThrowSet> getAllThrows(String matchId) {
-        Match match = getMatchById(matchId);
-
-        return new ArrayList<>(match.getThrowSets());
+    public List<ThrowSet> getAllThrowsInMatch(String matchId) {
+        return throwsRepository.getThrowsByMatchId(matchId);
     }
 
     @Override
@@ -73,9 +75,7 @@ public class DummyMatchRepository implements MatchRepository {
 
     @Override
     public ThrowSet addThrowSetToRound(String matchId, Integer roundNumber, ThrowSet throwSet) {
-        Match match = getMatchById(matchId);
-        throwSet.setRound(roundNumber);
-        match.getThrowSets().add(throwSet);
+
         return throwSet;
     }
 }

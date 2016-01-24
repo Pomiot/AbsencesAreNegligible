@@ -18,21 +18,17 @@ import javax.persistence.Table;
 @Table(name="match")
 public class Match implements Serializable {
 
-	private static final long serialVersionUID = -6377435247877594960L;
+    private static final long serialVersionUID = -6377435247877594960L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@Column(name="start_date")
+    @Column(name="start_date")
     private Date startDate;
 
-	@OneToMany(mappedBy="match")
-    private Set<ThrowSet> throwSets;
-
-	@ManyToOne
-	@JoinColumn(name="tournament_id")
-    private Tournament tournament;
+    @Column(name="tournament_id")
+    private Long tournamentId;
 
     public Match() {
         setStartDate(new Date(System.currentTimeMillis()));
@@ -54,19 +50,10 @@ public class Match implements Serializable {
         this.startDate = startDate;
     }
 
-    public Tournament getTournament() {
-        return tournament;
+    public Long getTournamentId() { return tournamentId; }
+
+    public void setTournamentId(Long tournamentId) {
+        this.tournamentId = tournamentId;
     }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
-	public Set<ThrowSet> getThrowSets() {
-		return throwSets;
-	}
-
-	public void setThrowSets(Set<ThrowSet> throwSets) {
-		this.throwSets = throwSets;
-	}
 }

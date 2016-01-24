@@ -89,4 +89,9 @@ public class PlayerUtility implements PlayerRepository {
 		return null;
 	}
 
+	@Override
+	public Player getPlayerById(Long id) {
+		return null;
+	}
+
 }
