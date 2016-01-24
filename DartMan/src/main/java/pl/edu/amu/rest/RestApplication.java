@@ -13,10 +13,8 @@ public class RestApplication extends ResourceConfig {
         beanConfig.setVersion("1.0.2");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setHost("localhost:8080");
-        beanConfig.setBasePath("");
+        beanConfig.setBasePath("/");
         beanConfig.setResourcePackage("pl.edu.amu.rest");
         beanConfig.setScan(true);
-
-        register(PlayerResource.class);
     }
 }

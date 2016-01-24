@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/tournaments")
-@Api("tournaments")
+@Api(value = "/tournaments", description = "")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TournamentResource {
