@@ -1,5 +1,8 @@
 package pl.edu.amu.rest.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -8,8 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@ApiModel("ThrowSet")
 @Table(name="throwset")
 public class ThrowSet implements Serializable {
 
@@ -17,24 +22,32 @@ public class ThrowSet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Auto-generated", required = true)
     private Long id;
 
     @Column(name="player")
+    @ApiModelProperty(value = "Player that throws belong to", required = true)
+    @NotNull
     private String player;
 
     @Column(name="match_id")
+    @ApiModelProperty(value = "Match that throws belong to", required = true)
     private Long matchId;
 
     @Column(name="round")
+    @ApiModelProperty(value = "Round in match that throws belong to", required = true)
     private Integer round;
 
     @Column(name="first_throw")
+    @ApiModelProperty(value = "Point value of fist throw", required = true)
     private Integer firstThrow;
 
     @Column(name="second_throw")
+    @ApiModelProperty(value = "Point value of second throw", required = true)
     private Integer secondThrow;
 
     @Column(name="third_throw")
+    @ApiModelProperty(value = "Point value of third throw", required = true)
     private Integer thirdThrow;
 
     public ThrowSet()
