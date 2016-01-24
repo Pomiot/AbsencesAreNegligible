@@ -85,6 +85,29 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
 	@Override
 	public Player updatePlayer(Player player) {
-		return null;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		
+		try
+		{
+			entityManager.getTransaction().begin();
+			
+			entityManager.createQuery(
+					"UPDATE Player p SET p.name = :newName , p.email = :newEmail WHERE p.login LIKE :login")
+					.setParameter("login", player.getLogin())
+					.setParameter("newName", player.getName())
+					.setParameter("newEmail", player.getEmail())
+					.executeUpdate();
+			
+			entityManager.getTransaction().commit();
+			entityManager.refresh(getPlayerByLogin(player.getLogin()));
+			return getPlayerByLogin(player.getLogin());
+		}
+		catch (Exception e)
+		{	
+			entityManager.getTransaction().rollback();
+			
+			throw new NotFoundException();
+		}
 	}
 }
