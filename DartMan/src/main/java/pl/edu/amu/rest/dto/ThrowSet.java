@@ -19,8 +19,8 @@ public class ThrowSet implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="player_id")
-    private Long playerId;
+    @Column(name="player")
+    private String player;
 
     @Column(name="match_id")
     private Long matchId;
@@ -42,9 +42,9 @@ public class ThrowSet implements Serializable {
         ;
     }
 
-    public ThrowSet(Long playerId, Long matchId, Integer round, Integer first, Integer second, Integer third)
+    public ThrowSet(String player, Long matchId, Integer round, Integer first, Integer second, Integer third)
     {
-        this.playerId = playerId;
+        this.player = player;
         this.matchId = matchId;
         this.round = round;
         this.firstThrow = first;
@@ -92,15 +92,6 @@ public class ThrowSet implements Serializable {
         this.thirdThrow = thirdThrow;
     }
 
-    public Long getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
-    }
-
-
     public Long getMatchId() {
         return matchId;
     }
@@ -108,4 +99,12 @@ public class ThrowSet implements Serializable {
     public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
+
+	public String getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(String player) {
+		this.player = player;
+	}
 }

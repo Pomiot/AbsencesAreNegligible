@@ -29,12 +29,12 @@ public class MatchTest extends TestCase
 		session.save(player2);
 		
 		Match match = new Match();
-		match.setTournament(tournament);
+		match.setTournamentName(tournament.getTournamentName());
 		
-		ThrowSet throwSet = new ThrowSet(player1, match, 1, 13, 10, 15);
-		ThrowSet throwSet1 = new ThrowSet(player2, match, 1, 12, 11, 16);
-		ThrowSet throwSet2 = new ThrowSet(player1, match, 2, 7, 12, 17);
-		ThrowSet throwSet3 = new ThrowSet(player2, match, 2, 8, 9, 17);
+		ThrowSet throwSet = new ThrowSet(player1.getLogin(), 1L, 1, 13, 10, 15);
+		ThrowSet throwSet1 = new ThrowSet(player2.getLogin(), 1L, 1, 12, 11, 16);
+		ThrowSet throwSet2 = new ThrowSet(player1.getLogin(), 1L, 2, 7, 12, 17);
+		ThrowSet throwSet3 = new ThrowSet(player2.getLogin(), 1L, 2, 8, 9, 17);
 		
 		session.save(match);
 		session.save(throwSet);
@@ -43,12 +43,12 @@ public class MatchTest extends TestCase
 		session.save(throwSet3);
 
 		Match secondMatch = new Match();
-		secondMatch.setTournament(tournament);
+		secondMatch.setTournamentName(tournament.getTournamentName());
 		
-		ThrowSet throwSetSecondMatch = new ThrowSet(player1, secondMatch, 1, 10, 21, 22);
-		ThrowSet throwSet1SecondMatch = new ThrowSet(player2, secondMatch, 1, 12, 11, 22);
-		ThrowSet throwSet2SecondMatch = new ThrowSet(player1, secondMatch, 2, 8, 12, 2);
-		ThrowSet throwSet3SecondMatch = new ThrowSet(player2, secondMatch, 2, 19, 10, 17);
+		ThrowSet throwSetSecondMatch = new ThrowSet(player1.getLogin(), 2L, 1, 10, 21, 22);
+		ThrowSet throwSet1SecondMatch = new ThrowSet(player2.getLogin(), 2L, 1, 12, 11, 22);
+		ThrowSet throwSet2SecondMatch = new ThrowSet(player1.getLogin(), 2L, 2, 8, 12, 2);
+		ThrowSet throwSet3SecondMatch = new ThrowSet(player2.getLogin(), 2L, 2, 19, 10, 17);
 		
 		session.save(secondMatch);
 		session.save(throwSetSecondMatch);

@@ -2,16 +2,12 @@ package pl.edu.amu.rest.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,8 +23,8 @@ public class Match implements Serializable {
     @Column(name="start_date")
     private Date startDate;
 
-    @Column(name="tournament_id")
-    private Long tournamentId;
+    @Column(name="tournament_name")
+    private String tournamentName;
 
     public Match() {
         setStartDate(new Date(System.currentTimeMillis()));
@@ -50,10 +46,12 @@ public class Match implements Serializable {
         this.startDate = startDate;
     }
 
-    public Long getTournamentId() { return tournamentId; }
+	public String getTournamentName() {
+		return tournamentName;
+	}
 
-    public void setTournamentId(Long tournamentId) {
-        this.tournamentId = tournamentId;
-    }
+	public void setTournamentName(String tournamentName) {
+		this.tournamentName = tournamentName;
+	}
 
 }

@@ -57,7 +57,7 @@ public class DummyMatchRepository implements MatchRepository {
         List<ThrowSet> throwSets = throwsRepository.getThrowsByMatchId(matchId);
         Set<Player> players = new TreeSet<>();
         for (ThrowSet throwSet : throwSets){
-            players.add(playerRepository.getPlayerById(throwSet.getPlayerId()));
+            players.add(playerRepository.getPlayerByLogin(throwSet.getPlayer()));
         }
 
         return new ArrayList<>(players);
