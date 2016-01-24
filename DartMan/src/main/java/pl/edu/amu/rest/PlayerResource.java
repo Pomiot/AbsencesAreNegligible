@@ -65,7 +65,7 @@ public class PlayerResource {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
     public Player modifyPlayer(@Valid Player player) {
-        return playerRepository.updatePlayerByLogin(player);
+        return playerRepository.updatePlayer(player);
     }
 
 }

@@ -84,7 +84,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 	}
 
 	@Override
-	public Player updatePlayerByLogin(Player player) {
+	public Player updatePlayer(Player player) {
 		return null;
 	}
 }

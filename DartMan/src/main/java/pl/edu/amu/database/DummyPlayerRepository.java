@@ -39,7 +39,7 @@ public class DummyPlayerRepository implements PlayerRepository {
     }
 
     @Override
-    public Player updatePlayerByLogin(Player player) {
+    public Player updatePlayer(Player player) {
 
         deletePlayer(player.getLogin());
         boolean result = addPlayer(player);
