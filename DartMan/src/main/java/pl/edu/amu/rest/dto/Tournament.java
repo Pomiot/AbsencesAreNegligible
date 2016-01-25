@@ -2,15 +2,15 @@ package pl.edu.amu.rest.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="tournament")
@@ -24,7 +24,8 @@ public class Tournament implements Serializable {
 
     @Column(name="start_date")
     private Date startDate;
-
+    
+    @NotBlank
     @Column(name="tournament_name")
     private String tournamentName;
 

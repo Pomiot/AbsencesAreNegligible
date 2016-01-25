@@ -1,9 +1,11 @@
 package pl.edu.amu.rest;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.ApiOperation;
 import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.repositoryImplementations.TournamentRepositoryImpl;
 import pl.edu.amu.rest.dto.Match;
@@ -37,7 +38,7 @@ public class TournamentResource {
 
     @POST
     @ApiOperation(value = "Creates new tournament", response = Tournament.class)
-    public Response saveTournament(Tournament tournament){
+    public Response saveTournament(@Valid Tournament tournament){
         tournamentRepository.saveTournament(tournament);
 
         return Response.status(201).entity(tournament).build();
@@ -60,7 +61,7 @@ public class TournamentResource {
 
     @PUT
     @ApiOperation(value = "Modifies tournament with given Id", response = Tournament.class)
-    public Response modifyTournament(Tournament tournament){
+    public Response modifyTournament(@Valid Tournament tournament){
         tournamentRepository.modifyTournament(tournament);
         return Response.status(200).entity(tournament).build();
     }

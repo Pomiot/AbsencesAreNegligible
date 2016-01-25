@@ -1,13 +1,16 @@
 package pl.edu.amu.repositoryImplementations;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 
 import pl.edu.amu.database.DatabaseManager;
 import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.rest.dto.Match;
+import pl.edu.amu.rest.dto.Player;
 import pl.edu.amu.rest.dto.Tournament;
 
 public class TournamentRepositoryImpl implements TournamentRepository {
@@ -30,6 +33,16 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 		try
 		{
+			List<Tournament> currentTournament = getTournaments();
+			List<Tournament> filtered = currentTournament.stream()
+												  .filter(t -> t.getTournamentName().equals(tournament.getTournamentName()))
+												  .collect(Collectors.toList());
+			
+			if (!filtered.isEmpty())
+			{
+				throw new BadRequestException();
+			}
+			
 			entityManager.getTransaction().begin();
 			entityManager.persist(tournament);
 			entityManager.getTransaction().commit();
@@ -38,9 +51,10 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		}
 		catch (Exception e)
 		{
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 
-			result = false;
+			throw e;
 		}
 
 		return result;
@@ -79,6 +93,7 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		}
 		catch (Exception e)
 		{	
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			throw new NotFoundException();
@@ -103,6 +118,16 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 			catch (Exception e)
 			{
 				throw new NotFoundException();
+			}
+			
+			List<Tournament> currentTournament = getTournaments();
+			List<Tournament> filtered = currentTournament.stream()
+												  .filter(t -> t.getTournamentName().equals(tournament.getTournamentName()))
+												  .collect(Collectors.toList());
+			
+			if (!filtered.isEmpty())
+			{
+				throw new BadRequestException();
 			}
 			
 			entityManager.getTransaction().begin();
@@ -140,7 +165,7 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
-			throw new NotFoundException();
+			throw e;
 		}
 	}
 

@@ -1,8 +1,10 @@
 package pl.edu.amu.repositoryImplementations;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 
 import pl.edu.amu.database.DatabaseManager;
@@ -47,6 +49,18 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 		try
 		{
+			List<Player> currentPlayers = getAllPlayers();
+			List<Player> filtered = currentPlayers.stream()
+												  .filter(p -> 
+												  		p.getLogin().equals(player.getLogin()) ||
+												  		p.getEmail().equals(player.getEmail()))
+												  .collect(Collectors.toList());
+			
+			if (!filtered.isEmpty())
+			{
+				throw new BadRequestException();
+			}
+			
 			entityManager.getTransaction().begin();
 			entityManager.persist(player);
 			entityManager.getTransaction().commit();
@@ -55,9 +69,10 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		}
 		catch (Exception e)
 		{
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 
-			result = false;
+			throw e;
 		}
 
 		return result;
@@ -91,6 +106,16 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		
 		try
 		{
+			List<Player> currentPlayers = getAllPlayers();
+			List<Player> filtered = currentPlayers.stream()
+												  .filter(p -> p.getEmail().equals(player.getEmail()))
+												  .collect(Collectors.toList());
+			
+			if (!filtered.isEmpty())
+			{
+				throw new BadRequestException();
+			}
+			
 			entityManager.getTransaction().begin();
 			
 			entityManager.createQuery(
