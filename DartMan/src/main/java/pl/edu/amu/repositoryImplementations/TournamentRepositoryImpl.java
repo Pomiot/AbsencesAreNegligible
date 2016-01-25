@@ -92,7 +92,29 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		
 		try
 		{
+			String actualTournamentName = null;
+			try
+			{
+				actualTournamentName = (String) entityManager.createQuery(
+						"SELECT t.tournamentName FROM Tournament t WHERE t.id = :id")
+						.setParameter("id", tournament.getId())
+						.getSingleResult();
+			}
+			catch (Exception e)
+			{
+				throw new NotFoundException();
+			}
+			
 			entityManager.getTransaction().begin();
+			
+			if (actualTournamentName != null)
+			{
+				entityManager.createQuery(
+						"UPDATE Match m SET m.tournamentName = :newName WHERE m.tournamentName LIKE :actualName")
+						.setParameter("newName", tournament.getTournamentName())
+						.setParameter("actualName", actualTournamentName)
+						.executeUpdate();
+			}
 			
 			entityManager.createQuery(
 					"UPDATE Tournament t SET t.tournamentName = :newName WHERE t.id = :id")
@@ -102,6 +124,15 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 			
 			entityManager.getTransaction().commit();
 			entityManager.refresh(getTournamentById(tournament.getId()));
+			
+			List<Match> matches = entityManager.createQuery(
+					"SELECT m FROM Match m").getResultList();
+			
+			for (Match m : matches)
+			{
+				entityManager.refresh(m);
+			}
+			
 			return getTournamentById(tournament.getId());
 		}
 		catch (Exception e)

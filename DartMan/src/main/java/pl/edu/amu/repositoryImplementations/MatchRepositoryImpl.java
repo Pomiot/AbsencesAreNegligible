@@ -92,8 +92,14 @@ public class MatchRepositoryImpl implements MatchRepository {
 		
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 		
+
 		try
 		{
+			entityManager.createQuery(
+					"SELECT m FROM Match m WHERE m.id = :matchId")
+					.setParameter("matchId", match.getId())
+					.getSingleResult();
+			
 			entityManager.getTransaction().begin();
 			
 			entityManager.createQuery(
@@ -108,6 +114,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 		}
 		catch (Exception e)
 		{	
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			throw new NotFoundException();
