@@ -107,7 +107,8 @@ public class MatchResource {
     @Path("/{matchId}/rounds/{roundNumber}")
     @ApiOperation(value = "Adds throw to given round in match with given id", response = ThrowSet.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "Match not found") })
+            @ApiResponse(code = 404, message = "Match not found"),
+            @ApiResponse(code = 400, message = "Thrown when player with given login does not exist in database")})
     public Response addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
         matchRepository.addThrowSetToRound(matchId, roundNumber, throwSet);
         return Response.status(201).entity(throwSet).build();

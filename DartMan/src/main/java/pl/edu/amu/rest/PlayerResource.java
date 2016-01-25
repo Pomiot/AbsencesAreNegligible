@@ -29,6 +29,8 @@ public class PlayerResource {
 
     @POST
     @ApiOperation(value = "Creates new player", response = Player.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Thrown when trying if player login or email is already in database.") })
     public Response savePlayer(@ApiParam(value = "Player object to add. Player login must be unique.", required = true) @Valid Player player){
 
         playerRepository.addPlayer(player);
@@ -60,7 +62,8 @@ public class PlayerResource {
     @PUT
     @ApiOperation(value = "Modifies player with given login")
     @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "Player not found") })
+            @ApiResponse(code = 404, message = "Player not found"),
+            @ApiResponse(code = 400, message = "Thrown when trying if player email is already in database.")})
     public Response modifyPlayer(@ApiParam(value = "Updated player object. Player to update is choosen with player object login attribute.",
             required = true) @Valid Player player) {
         playerRepository.updatePlayer(player);

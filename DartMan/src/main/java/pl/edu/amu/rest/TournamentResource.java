@@ -17,6 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.repositoryImplementations.TournamentRepositoryImpl;
 import pl.edu.amu.rest.dto.Match;
@@ -38,6 +40,8 @@ public class TournamentResource {
 
     @POST
     @ApiOperation(value = "Creates new tournament", response = Tournament.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Thrown when tournament name already exists in database") })
     public Response saveTournament(@Valid Tournament tournament){
         tournamentRepository.saveTournament(tournament);
 
@@ -61,6 +65,8 @@ public class TournamentResource {
 
     @PUT
     @ApiOperation(value = "Modifies tournament with given Id", response = Tournament.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Thrown when tournament name already exists in database") })
     public Response modifyTournament(@Valid Tournament tournament){
         tournamentRepository.modifyTournament(tournament);
         return Response.status(200).entity(tournament).build();
