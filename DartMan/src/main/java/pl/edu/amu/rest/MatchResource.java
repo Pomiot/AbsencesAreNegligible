@@ -112,6 +112,7 @@ public class MatchResource {
     
     @DELETE
     @Path("/{matchId}/throws/{throwId}")
+    @ApiOperation(value = "Removes given throw if it belongs to match.")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Throw not found") })
     public boolean deleteThrow(@PathParam("matchId") Long matchId, @PathParam("throwId") Long throwId) {
