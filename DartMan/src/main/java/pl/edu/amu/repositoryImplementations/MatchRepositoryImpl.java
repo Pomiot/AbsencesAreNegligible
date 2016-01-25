@@ -74,7 +74,14 @@ public class MatchRepositoryImpl implements MatchRepository {
 		try
 		{
 			entityManager.getTransaction().begin();
+			
 			entityManager.remove(getMatchById(matchId));
+			
+			entityManager.createQuery(
+					"DELETE FROM ThrowSet t where t.matchId = :matchId")
+					.setParameter("matchId", matchId)
+					.executeUpdate();
+			
 			entityManager.getTransaction().commit();
 			
 			return true;
