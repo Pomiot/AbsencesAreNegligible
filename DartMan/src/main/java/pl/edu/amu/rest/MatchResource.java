@@ -17,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import pl.edu.amu.database.MatchRepository;
 import pl.edu.amu.repositoryImplementations.MatchRepositoryImpl;
@@ -41,10 +42,9 @@ public class MatchResource {
 
     @POST
     @ApiOperation(value = "Creates new match", response = Match.class)
-    public Match saveMatch(@ApiParam(value = "Match object to save.", required = true) Match match) {
+    public Response saveMatch(@ApiParam(value = "Match object to save.", required = true) Match match) {
         matchRepository.addMatch(match);
-
-        return match;
+        return Response.status(201).entity(match).build();
     }
 
     @GET
@@ -61,16 +61,18 @@ public class MatchResource {
     @ApiOperation(value = "Deletes match by given id")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Match not found") })
-    public void deleteMatch(@ApiParam(value = "Id of match to remove.", required = true) @PathParam("matchId") Long matchId) {
+    public Response deleteMatch(@ApiParam(value = "Id of match to remove.", required = true) @PathParam("matchId") Long matchId) {
         matchRepository.deleteMatch(matchId);
+        return Response.status(204).build();
     }
 
     @PUT
     @ApiOperation(value = "Modifies match with given id")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Match not found") })
-    public void modifyMatch(Match match) {
+    public Response modifyMatch(Match match) {
         matchRepository.updateMatch(match);
+        return Response.status(200).entity(match).build();
     }
 
     @GET
@@ -106,8 +108,9 @@ public class MatchResource {
     @ApiOperation(value = "Adds throw to given round in match with given id", response = ThrowSet.class)
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Match not found") })
-    public boolean addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
-        return matchRepository.addThrowSetToRound(matchId, roundNumber, throwSet);
+    public Response addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
+        matchRepository.addThrowSetToRound(matchId, roundNumber, throwSet);
+        return Response.status(201).entity(throwSet).build();
     }
     
     @DELETE
@@ -115,8 +118,9 @@ public class MatchResource {
     @ApiOperation(value = "Removes given throw if it belongs to match.")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Throw not found") })
-    public boolean deleteThrow(@PathParam("matchId") Long matchId, @PathParam("throwId") Long throwId) {
-        return matchRepository.deleteThrow(matchId, throwId);
+    public Response deleteThrow(@PathParam("matchId") Long matchId, @PathParam("throwId") Long throwId) {
+        matchRepository.deleteThrow(matchId, throwId);
+        return Response.status(204).build();
     }
     
 }

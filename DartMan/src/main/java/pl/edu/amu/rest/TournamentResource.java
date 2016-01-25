@@ -13,7 +13,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.ApiOperation;
 import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.repositoryImplementations.TournamentRepositoryImpl;
 import pl.edu.amu.rest.dto.Match;
@@ -28,34 +30,44 @@ public class TournamentResource {
     private static TournamentRepository tournamentRepository = new TournamentRepositoryImpl();
 
     @GET
+    @ApiOperation(value = "Gets list of all tournaments", response = Tournament.class, responseContainer = "List")
     public List<Tournament> getTournaments(){
         return tournamentRepository.getTournaments();
     }
 
     @POST
-    public boolean saveTournament(Tournament tournament){
-        return tournamentRepository.saveTournament(tournament);
+    @ApiOperation(value = "Creates new tournament", response = Tournament.class)
+    public Response saveTournament(Tournament tournament){
+        tournamentRepository.saveTournament(tournament);
+
+        return Response.status(201).entity(tournament).build();
     }
 
     @GET
     @Path("/{tournamentId}")
+    @ApiOperation(value = "Gets tournament by Id", response = Tournament.class)
     public Tournament getTournament(@PathParam("tournamentId") final Long tournamentId){
         return tournamentRepository.getTournamentById(tournamentId);
     }
 
     @DELETE
     @Path("/{tournamentId}")
-    public void deleteTournament(@PathParam("tournamentId") final Long tournamentId){
+    @ApiOperation(value = "Removes tournament with given Id", response = Tournament.class)
+    public Response deleteTournament(@PathParam("tournamentId") final Long tournamentId){
         tournamentRepository.deleteTournament(tournamentId);
+        return Response.status(204).build();
     }
 
     @PUT
-    public Tournament modifyTournament(Tournament tournament){
-        return tournamentRepository.modifyTournament(tournament);
+    @ApiOperation(value = "Modifies tournament with given Id", response = Tournament.class)
+    public Response modifyTournament(Tournament tournament){
+        tournamentRepository.modifyTournament(tournament);
+        return Response.status(200).entity(tournament).build();
     }
     
     @GET
     @Path("/{tournamentId}/matches")
+    @ApiOperation(value = "Gets matches that belong to tournament with given Id", response = Match.class, responseContainer = "List")
     public List<Match> getTournamentMatches(@PathParam("tournamentId") final Long tournamentId){
         return tournamentRepository.getTournamentMatches(tournamentId);
     }

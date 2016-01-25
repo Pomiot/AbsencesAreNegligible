@@ -1,7 +1,6 @@
 package pl.edu.amu.rest;
 
 import io.swagger.annotations.*;
-import pl.edu.amu.database.DummyPlayerRepository;
 import pl.edu.amu.database.PlayerRepository;
 import pl.edu.amu.repositoryImplementations.PlayerRepositoryImpl;
 import pl.edu.amu.rest.dto.Player;
@@ -9,6 +8,7 @@ import pl.edu.amu.rest.dto.Player;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -29,11 +29,11 @@ public class PlayerResource {
 
     @POST
     @ApiOperation(value = "Creates new player", response = Player.class)
-    public Player savePlayer(@ApiParam(value = "Player object to add. Player login must be unique.", required = true) @Valid Player player){
+    public Response savePlayer(@ApiParam(value = "Player object to add. Player login must be unique.", required = true) @Valid Player player){
 
         playerRepository.addPlayer(player);
     	
-        return player;
+        return Response.status(201).entity(player).build();
     }
 
     @GET
@@ -51,19 +51,20 @@ public class PlayerResource {
     @ApiOperation(value = "Removes player with given login")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
-    public void deletePlayer(@ApiParam(value = "Login of player to remove.", required = true) @PathParam("login") final String login) {
+    public Response deletePlayer(@ApiParam(value = "Login of player to remove.", required = true) @PathParam("login") final String login) {
 
         playerRepository.deletePlayer(login);
-    	
+        return Response.status(204).build();
     }
 
     @PUT
     @ApiOperation(value = "Modifies player with given login")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Player not found") })
-    public Player modifyPlayer(@ApiParam(value = "Updated player object. Player to update is choosen with player object login attribute.",
+    public Response modifyPlayer(@ApiParam(value = "Updated player object. Player to update is choosen with player object login attribute.",
             required = true) @Valid Player player) {
-        return playerRepository.updatePlayer(player);
+        playerRepository.updatePlayer(player);
+        return Response.status(200).entity(player).build();
     }
 
 }
