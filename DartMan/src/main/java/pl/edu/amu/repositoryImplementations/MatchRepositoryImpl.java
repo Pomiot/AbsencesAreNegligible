@@ -12,6 +12,7 @@ import pl.edu.amu.database.MatchRepository;
 import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Player;
 import pl.edu.amu.rest.dto.ThrowSet;
+import pl.edu.amu.rest.dto.Tournament;
 
 public class MatchRepositoryImpl implements MatchRepository {
 
@@ -110,6 +111,16 @@ public class MatchRepositoryImpl implements MatchRepository {
 					.setParameter("matchId", match.getId())
 					.getSingleResult();
 			
+			List<Tournament> tournaments = new TournamentRepositoryImpl().getTournaments();
+			List<String> tournamentsNames = tournaments.stream()
+													   .map(t -> t.getTournamentName())
+													   .collect(Collectors.toList());
+			
+			if (match != null && !match.getTournamentName().equals("") && !tournamentsNames.contains(match.getTournamentName()))
+			{
+				throw new BadRequestException();
+			}
+			
 			entityManager.getTransaction().begin();
 			
 			entityManager.createQuery(
@@ -127,7 +138,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
-			throw new NotFoundException();
+			throw e;
 		}
 	}
 
