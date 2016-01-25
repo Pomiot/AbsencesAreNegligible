@@ -15,7 +15,7 @@ public class DummyThrowsRepository implements ThrowsRepository {
     static List<ThrowSet> throwSets = new ArrayList<>();
 
     @Override
-    public List<ThrowSet> getThrowsByMatchId(String matchId) {
+    public List<ThrowSet> getThrowsByMatchId(Long matchId) {
 
         List<ThrowSet> throwSetsInMatch = throwSets.stream().filter(throwSet -> throwSet.getMatchId().equals(matchId)).collect(Collectors.toList());
 
@@ -32,7 +32,7 @@ public class DummyThrowsRepository implements ThrowsRepository {
     }
 
     @Override
-    public List<ThrowSet> getPlayerThrowsInMatch(String matchId, String login) {
+    public List<ThrowSet> getPlayerThrowsInMatch(Long matchId, String login) {
 
         List<ThrowSet> throwSetsInMatch = throwSets.stream().filter(throwSet -> throwSet.getMatchId().equals(matchId) && throwSet.getPlayer().equals(login)).collect(Collectors.toList());
         return throwSetsInMatch;
@@ -46,7 +46,7 @@ public class DummyThrowsRepository implements ThrowsRepository {
     }
 
     @Override
-    public List<ThrowSet> getThrowsFromRoundInMatch(String matchId, Integer roundNumber) {
+    public List<ThrowSet> getThrowsFromRoundInMatch(Long matchId, Integer roundNumber) {
         List<ThrowSet> throwSetsInMatch = throwSets.stream().filter(throwSet -> throwSet.getMatchId().equals(matchId) && throwSet.getRound().equals(roundNumber)).collect(Collectors.toList());
         return throwSetsInMatch;
     }

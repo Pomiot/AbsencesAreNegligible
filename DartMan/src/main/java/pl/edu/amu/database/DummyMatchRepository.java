@@ -26,7 +26,7 @@ public class DummyMatchRepository implements MatchRepository {
     }
 
     @Override
-    public Match getMatchById(String matchId) throws NotFoundException {
+    public Match getMatchById(Long matchId) throws NotFoundException {
         return matches
                 .stream()
                 .filter(match -> matchId.equals(match.getId()))
@@ -40,19 +40,19 @@ public class DummyMatchRepository implements MatchRepository {
     }
 
     @Override
-    public boolean deleteMatch(String matchId) {
+    public boolean deleteMatch(Long matchId) {
         return matches.remove(getMatchById(matchId));
     }
 
     @Override
-    public Match updateMatchById(String matchId, Match match) {
-        deleteMatch(matchId);
+    public Match updateMatch(Match match) {
+        deleteMatch(match.getId());
         matches.add(match);
         return match;
     }
 
     @Override
-    public List<Player> getPlayersInMatch(String matchId) {
+    public List<Player> getPlayersInMatch(Long matchId) {
 
         List<ThrowSet> throwSets = throwsRepository.getThrowsByMatchId(matchId);
         Set<Player> players = new TreeSet<>();
@@ -64,19 +64,19 @@ public class DummyMatchRepository implements MatchRepository {
     }
 
     @Override
-    public List<ThrowSet> getAllThrowsInMatch(String matchId) {
+    public List<ThrowSet> getAllThrowsInMatch(Long matchId) {
         return throwsRepository.getThrowsByMatchId(matchId);
     }
 
     @Override
-    public List<ThrowSet> getThrowsInRound(String matchId, Integer roundNumber) {
+    public List<ThrowSet> getThrowsInRound(Long matchId, Integer roundNumber) {
         return throwsRepository.getThrowsFromRoundInMatch(matchId, roundNumber);
     }
 
     @Override
-    public ThrowSet addThrowSetToRound(String matchId, Integer roundNumber, ThrowSet throwSet) {
+    public ThrowSet addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet) {
         throwSet.setRound(roundNumber);
-        throwSet.setMatchId(Long.parseLong(matchId));
+        throwSet.setMatchId(matchId);
         throwsRepository.addThrowSet(throwSet);
         return throwSet;
     }

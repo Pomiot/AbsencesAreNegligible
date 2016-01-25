@@ -11,20 +11,20 @@ public interface MatchRepository {
 
     List<Match> getAllMatches();
 
-    Match getMatchById(String matchId) throws NotFoundException;
+    Match getMatchById(Long matchId) throws NotFoundException;
 
     boolean addMatch(Match match);
 
-    boolean deleteMatch(String matchId);
+    boolean deleteMatch(Long matchId);
 
-    Match updateMatchById(String matchId, Match match);
+    Match updateMatch(Match match);
 
-    List<Player> getPlayersInMatch(String matchId);
+    List<Player> getPlayersInMatch(Long matchId);
 
-    List<ThrowSet> getAllThrowsInMatch(String matchId);
+    List<ThrowSet> getAllThrowsInMatch(Long matchId);
 
-    List<ThrowSet> getThrowsInRound(String matchId, Integer roundNumber);
+    List<ThrowSet> getThrowsInRound(Long matchId, Integer roundNumber);
 
-    ThrowSet addThrowSetToRound(String matchId, Integer roundNumber, ThrowSet throwSet);
+    ThrowSet addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet);
 
 }

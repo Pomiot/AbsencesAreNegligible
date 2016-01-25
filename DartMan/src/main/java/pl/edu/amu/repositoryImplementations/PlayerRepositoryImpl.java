@@ -23,6 +23,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 
 	@Override
 	public Player getPlayerByLogin(String login) throws NotFoundException {
+		
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 
 		try
