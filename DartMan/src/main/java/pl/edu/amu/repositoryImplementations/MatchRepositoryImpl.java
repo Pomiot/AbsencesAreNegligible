@@ -88,6 +88,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 		}
 		catch (Exception e)
 		{	
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			throw new NotFoundException();
@@ -213,12 +214,46 @@ public class MatchRepositoryImpl implements MatchRepository {
 		}
 		catch (Exception e)
 		{
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			result = false;
 		}
 		
 		return result;
+	}
+
+	@Override
+	public boolean deleteThrow(Long matchId, Long throwId) {
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+
+		try
+		{
+			ThrowSet throwSet = (ThrowSet) entityManager.createQuery(
+					"SELECT t FROM ThrowSet t where t.matchId = :matchId AND t.id = :throwId")
+					.setParameter("matchId", matchId)
+					.setParameter("throwId", throwId)
+					.getSingleResult();
+			
+			if (throwSet == null)
+			{
+				throw new NotFoundException();
+			}
+			
+			entityManager.getTransaction().begin();
+			entityManager.remove(throwSet);
+			entityManager.getTransaction().commit();
+			
+			return true;
+		}
+		catch (Exception e)
+		{	
+			if (entityManager.getTransaction().isActive())
+			entityManager.getTransaction().rollback();
+			
+			throw new NotFoundException();
+		}
 	}
 
 

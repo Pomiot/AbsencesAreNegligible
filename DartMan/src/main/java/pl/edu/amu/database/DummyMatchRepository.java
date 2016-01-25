@@ -5,6 +5,7 @@ import pl.edu.amu.rest.dto.Player;
 import pl.edu.amu.rest.dto.ThrowSet;
 
 import javax.ws.rs.NotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -80,4 +81,9 @@ public class DummyMatchRepository implements MatchRepository {
         throwsRepository.addThrowSet(throwSet);
         return true;
     }
+
+	@Override
+	public boolean deleteThrow(Long matchId, Long throwId) {
+		return false;
+	}
 }

@@ -5,6 +5,7 @@ import pl.edu.amu.rest.dto.Player;
 import pl.edu.amu.rest.dto.ThrowSet;
 
 import javax.ws.rs.NotFoundException;
+
 import java.util.List;
 
 public interface MatchRepository {
@@ -26,5 +27,7 @@ public interface MatchRepository {
     List<ThrowSet> getThrowsInRound(Long matchId, Integer roundNumber);
 
     boolean addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet);
+
+	boolean deleteThrow(Long matchId, Long throwId);
 
 }

@@ -109,5 +109,13 @@ public class MatchResource {
     public boolean addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
         return matchRepository.addThrowSetToRound(matchId, roundNumber, throwSet);
     }
-
+    
+    @DELETE
+    @Path("/{matchId}/throws/{throwId}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Throw not found") })
+    public boolean deleteThrow(@PathParam("matchId") Long matchId, @PathParam("throwId") Long throwId) {
+        return matchRepository.deleteThrow(matchId, throwId);
+    }
+    
 }
