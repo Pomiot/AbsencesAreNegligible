@@ -1,17 +1,28 @@
 package pl.edu.amu.rest;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import pl.edu.amu.database.MatchRepository;
 import pl.edu.amu.repositoryImplementations.MatchRepositoryImpl;
 import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Player;
 import pl.edu.amu.rest.dto.ThrowSet;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-import java.util.List;
 
 
 @Path("/matches")

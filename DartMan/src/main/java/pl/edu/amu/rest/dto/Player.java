@@ -10,26 +10,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="player")
+@ApiModel(value = "Player", description = "Player model. Not very surprising, isn't it?")
 public class Player implements Serializable {
 
 	private static final long serialVersionUID = -6484849192253524069L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(value = "Auto-generated", required = true)
 	private Long id;
-	
+
+    @ApiModelProperty(value = "Unique player identifier", required = true)
 	@NotBlank @NotNull
 	@Column(name="login")
     private String login;
 
-    @NotBlank
+    @ApiModelProperty(value = "Player name", required = false)
     @Column(name="name")
     private String name;
 
+    @ApiModelProperty(value = "Self-explanatory", required = false)
     @Column(name="email")
     private String email;
 
