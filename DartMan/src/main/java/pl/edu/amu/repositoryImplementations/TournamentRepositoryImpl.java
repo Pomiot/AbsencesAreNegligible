@@ -7,6 +7,7 @@ import javax.ws.rs.NotFoundException;
 
 import pl.edu.amu.database.DatabaseManager;
 import pl.edu.amu.database.TournamentRepository;
+import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Tournament;
 
 public class TournamentRepositoryImpl implements TournamentRepository {
@@ -107,6 +108,34 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		{	
 			entityManager.getTransaction().rollback();
 			
+			throw new NotFoundException();
+		}
+	}
+
+	@Override
+	public List<Match> getTournamentMatches(Long tournamentId) {
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		
+		try
+		{
+			String tournament = (String) entityManager.createQuery(
+				    "SELECT t.tournamentName FROM Tournament t where t.id = :tournamentId")
+				    .setParameter("tournamentId", tournamentId)
+				    .getSingleResult();
+			
+			if (tournament == null) 
+			{
+				throw new NotFoundException();
+			}
+			
+			return entityManager.createQuery(
+				    "SELECT m FROM Match m where m.tournamentName LIKE :tournament")
+				    .setParameter("tournament", tournament)
+				    .getResultList();
+		}
+		catch (Exception e)
+		{	
 			throw new NotFoundException();
 		}
 	}

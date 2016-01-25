@@ -1,5 +1,6 @@
 package pl.edu.amu.database;
 
+import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Tournament;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface TournamentRepository {
     boolean deleteTournament(Long tournamentId);
 
     Tournament modifyTournament(Tournament tournament);
+
+	List<Match> getTournamentMatches(Long tournamentId);
 
 }

@@ -1,8 +1,10 @@
 package pl.edu.amu.database;
 
+import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Tournament;
 
 import javax.ws.rs.NotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,4 +47,9 @@ public class DummyTournamentRepository implements TournamentRepository {
         tournaments.add(tournament);
         return tournament;
     }
+
+	@Override
+	public List<Match> getTournamentMatches(Long tournamentId) {
+		return null;
+	}
 }

@@ -97,7 +97,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 			entityManager.getTransaction().begin();
 			
 			entityManager.createQuery(
-					"UPDATE Match m SET m.tournament_name = :newTournamentName WHERE m.id LIKE :id")
+					"UPDATE Match m SET m.tournamentName = :newTournamentName WHERE m.id = :id")
 					.setParameter("newTournamentName", match.getTournamentName())
 					.setParameter("id", match.getId())
 					.executeUpdate();

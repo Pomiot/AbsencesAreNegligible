@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import pl.edu.amu.database.TournamentRepository;
 import pl.edu.amu.repositoryImplementations.TournamentRepositoryImpl;
+import pl.edu.amu.rest.dto.Match;
 import pl.edu.amu.rest.dto.Tournament;
 
 @Path("/tournaments")
@@ -51,5 +52,11 @@ public class TournamentResource {
     @PUT
     public Tournament modifyTournament(Tournament tournament){
         return tournamentRepository.modifyTournament(tournament);
+    }
+    
+    @GET
+    @Path("/{tournamentId}/matches")
+    public List<Match> getTournamentMatches(@PathParam("tournamentId") final Long tournamentId){
+        return tournamentRepository.getTournamentMatches(tournamentId);
     }
 }
