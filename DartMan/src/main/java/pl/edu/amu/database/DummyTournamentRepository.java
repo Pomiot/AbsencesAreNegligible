@@ -19,13 +19,13 @@ public class DummyTournamentRepository implements TournamentRepository {
     }
 
     @Override
-    public Tournament saveTournament(Tournament tournament) {
+    public boolean saveTournament(Tournament tournament) {
         tournaments.add(tournament);
-        return tournament;
+        return true;
     }
 
     @Override
-    public Tournament getTournamentById(String tournamentId) {
+    public Tournament getTournamentById(Long tournamentId) {
         return tournaments
                 .stream()
                 .filter(tournament -> tournamentId.equals(tournament.getId()))
@@ -34,13 +34,14 @@ public class DummyTournamentRepository implements TournamentRepository {
     }
 
     @Override
-    public void deleteTournament(String tournamentId) {
+    public boolean deleteTournament(Long tournamentId) {
         tournaments.remove(getTournamentById(tournamentId));
+        return true;
     }
 
     @Override
-    public Tournament modifyTournament(String tournamentId, Tournament tournament) {
-        deleteTournament(tournamentId);
+    public Tournament modifyTournament(Tournament tournament) {
+        deleteTournament(tournament.getId());
         tournaments.add(tournament);
         return tournament;
     }

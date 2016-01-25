@@ -11,12 +11,12 @@ public interface TournamentRepository {
 
     List<Tournament> getTournaments();
 
-    Tournament saveTournament(Tournament tournament);
+    boolean saveTournament(Tournament tournament);
 
-    Tournament getTournamentById(String tournamentId);
+    Tournament getTournamentById(Long tournamentId);
 
-    void deleteTournament(String tournamentId);
+    boolean deleteTournament(Long tournamentId);
 
-    Tournament modifyTournament(String tournamentId, Tournament tournament);
+    Tournament modifyTournament(Tournament tournament);
 
 }
