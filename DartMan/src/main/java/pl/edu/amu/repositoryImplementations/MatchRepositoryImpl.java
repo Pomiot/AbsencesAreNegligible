@@ -1,8 +1,10 @@
 package pl.edu.amu.repositoryImplementations;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 
 import pl.edu.amu.database.DatabaseManager;
@@ -203,6 +205,18 @@ public class MatchRepositoryImpl implements MatchRepository {
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 		try
 		{
+			
+			List<Player> players = new PlayerRepositoryImpl().getAllPlayers();
+			
+			List<String> logins = players.stream()
+										 .map(p -> p.getLogin())
+										 .collect(Collectors.toList());
+			
+			if (!logins.contains(throwSet.getPlayer()))
+			{
+				throw new BadRequestException();
+			}
+			
 			throwSet.setMatchId(matchId);
 			throwSet.setRound(roundNumber);
 			
@@ -217,7 +231,7 @@ public class MatchRepositoryImpl implements MatchRepository {
 			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
-			result = false;
+			throw e;
 		}
 		
 		return result;
