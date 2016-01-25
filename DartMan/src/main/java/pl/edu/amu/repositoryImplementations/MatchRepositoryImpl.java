@@ -89,33 +89,122 @@ public class MatchRepositoryImpl implements MatchRepository {
 
 	@Override
 	public Match updateMatch(Match match) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		
+		try
+		{
+			entityManager.getTransaction().begin();
+			
+			entityManager.createQuery(
+					"UPDATE Match m SET m.tournament_name = :newTournamentName WHERE m.id LIKE :id")
+					.setParameter("newTournamentName", match.getTournamentName())
+					.setParameter("id", match.getId())
+					.executeUpdate();
+			
+			entityManager.getTransaction().commit();
+			entityManager.refresh(getMatchById(match.getId()));
+			return getMatchById(match.getId());
+		}
+		catch (Exception e)
+		{	
+			entityManager.getTransaction().rollback();
+			
+			throw new NotFoundException();
+		}
 	}
 
 	@Override
 	public List<Player> getPlayersInMatch(Long matchId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		
+		try
+		{
+			List<String> logins = entityManager.createQuery(
+				    "SELECT DISTINCT t.player FROM ThrowSet t where t.matchId = :matchId")
+				    .setParameter("matchId", matchId)
+				    .getResultList();
+			
+			if (logins == null || logins.isEmpty()) 
+			{
+				throw new NotFoundException();
+			}
+			
+			return entityManager.createQuery(
+				    "SELECT DISTINCT p FROM Player p where p.login IN :logins")
+				    .setParameter("logins", logins)
+				    .getResultList();
+		}
+		catch (Exception e)
+		{	
+			throw new NotFoundException();
+		}
 	}
 
 	@Override
 	public List<ThrowSet> getAllThrowsInMatch(Long matchId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+
+		try
+		{
+			return entityManager.createQuery(
+					"SELECT t FROM ThrowSet t WHERE t.matchId = :matchId")
+					.setParameter("matchId", matchId)
+					.getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new NotFoundException();
+		}
 	}
 
 	@Override
 	public List<ThrowSet> getThrowsInRound(Long matchId, Integer roundNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		
+		try
+		{
+			return entityManager.createQuery(
+					"SELECT t FROM ThrowSet t WHERE t.matchId = :matchId AND t.round = :roundNumber")
+					.setParameter("matchId", matchId)
+					.setParameter("roundNumber", roundNumber)
+					.getResultList();
+		}
+		catch (Exception e)
+		{
+			throw new NotFoundException();
+		}
 	}
 
 	@Override
-	public ThrowSet addThrowSetToRound(Long matchId, Integer roundNumber,
+	public boolean addThrowSetToRound(Long matchId, Integer roundNumber,
 			ThrowSet throwSet) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		boolean result = false;
+		
+		EntityManager entityManager = DatabaseManager.getEntityManager();
+		try
+		{
+			throwSet.setMatchId(matchId);
+			throwSet.setRound(roundNumber);
+			
+			entityManager.getTransaction().begin();
+			entityManager.persist(throwSet);
+			entityManager.getTransaction().commit();
+			
+			result = true;
+		}
+		catch (Exception e)
+		{
+			entityManager.getTransaction().rollback();
+			
+			result = false;
+		}
+		
+		return result;
 	}
 
 

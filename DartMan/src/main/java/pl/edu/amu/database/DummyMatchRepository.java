@@ -74,10 +74,10 @@ public class DummyMatchRepository implements MatchRepository {
     }
 
     @Override
-    public ThrowSet addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet) {
+    public boolean addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet) {
         throwSet.setRound(roundNumber);
         throwSet.setMatchId(matchId);
         throwsRepository.addThrowSet(throwSet);
-        return throwSet;
+        return true;
     }
 }

@@ -106,7 +106,7 @@ public class MatchResource {
     @ApiOperation(value = "Adds throw to given round in match with given id", response = ThrowSet.class)
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Match not found") })
-    public ThrowSet addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
+    public boolean addThrowSetToRound(@PathParam("matchId") Long matchId, @PathParam("roundNumber") Integer roundNumber, ThrowSet throwSet){
         return matchRepository.addThrowSetToRound(matchId, roundNumber, throwSet);
     }
 

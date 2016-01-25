@@ -25,6 +25,6 @@ public interface MatchRepository {
 
     List<ThrowSet> getThrowsInRound(Long matchId, Integer roundNumber);
 
-    ThrowSet addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet);
+    boolean addThrowSetToRound(Long matchId, Integer roundNumber, ThrowSet throwSet);
 
 }
