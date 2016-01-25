@@ -106,6 +106,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 		}
 		catch (Exception e)
 		{	
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			throw new NotFoundException();

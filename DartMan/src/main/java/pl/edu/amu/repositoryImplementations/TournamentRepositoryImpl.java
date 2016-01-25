@@ -137,6 +137,7 @@ public class TournamentRepositoryImpl implements TournamentRepository {
 		}
 		catch (Exception e)
 		{	
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 			
 			throw new NotFoundException();
