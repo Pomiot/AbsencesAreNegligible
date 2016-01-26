@@ -42,6 +42,8 @@ public class MatchResource {
 
     @POST
     @ApiOperation(value = "Creates new match", response = Match.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Thrown when tournament name does not exist is database")})
     public Response saveMatch(@ApiParam(value = "Match object to save.", required = true) Match match) {
         matchRepository.addMatch(match);
         return Response.status(201).entity(match).build();
@@ -69,7 +71,8 @@ public class MatchResource {
     @PUT
     @ApiOperation(value = "Modifies match with given id")
     @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "Match not found") })
+            @ApiResponse(code = 404, message = "Match not found"),
+            @ApiResponse(code = 400, message = "Thrown when tournament name does not exist is database")})
     public Response modifyMatch(Match match) {
         matchRepository.updateMatch(match);
         return Response.status(200).entity(match).build();
