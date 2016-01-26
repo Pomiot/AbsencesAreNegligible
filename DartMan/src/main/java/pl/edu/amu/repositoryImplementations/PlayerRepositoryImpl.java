@@ -56,7 +56,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
 												  		p.getEmail().equals(player.getEmail()))
 												  .collect(Collectors.toList());
 			
-			if (!filtered.isEmpty())
+			if (!filtered.isEmpty() || player.getId() != null)
 			{
 				throw new BadRequestException();
 			}

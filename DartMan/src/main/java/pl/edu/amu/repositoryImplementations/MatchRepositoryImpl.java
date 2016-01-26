@@ -53,6 +53,16 @@ public class MatchRepositoryImpl implements MatchRepository {
 		EntityManager entityManager = DatabaseManager.getEntityManager();
 		try
 		{
+			List<Tournament> tournaments = new TournamentRepositoryImpl().getTournaments();
+			List<String> tournamentsNames = tournaments.stream()
+													   .map(t -> t.getTournamentName())
+													   .collect(Collectors.toList());
+			
+			if (match != null && !match.getTournamentName().equals("") && !tournamentsNames.contains(match.getTournamentName()))
+			{
+				throw new BadRequestException();
+			}
+			
 			entityManager.getTransaction().begin();
 			entityManager.persist(match);
 			entityManager.getTransaction().commit();
@@ -61,9 +71,10 @@ public class MatchRepositoryImpl implements MatchRepository {
 		}
 		catch (Exception e)
 		{
+			if (entityManager.getTransaction().isActive())
 			entityManager.getTransaction().rollback();
 
-			result = false;
+			throw e;
 		}
 
 		return result;
